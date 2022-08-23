@@ -1,0 +1,39 @@
+---
+- name: Install dependencies
+  hosts: kvm-nodes-packer
+  vars:
+    password: oneadmin
+  become: true
+  tasks:
+    - name: Update repositories cache and install a list of packages
+      apt:
+        pkg:
+          - gnupg
+          - wget
+          - apt-transport-https
+        update_cache: yes
+
+    - name: Add an apt key
+      apt_key:
+        url: https://downloads.opennebula.io/repo/repo.key
+
+    - name: Add specified repository into sources list using specified filename
+      apt_repository:
+        repo: deb https://downloads.opennebula.io/repo/6.4/Debian/11 stable opennebula
+        filename: opennebula
+
+    - name: Update repositories cache and install "opennebula-node-kvm" package
+      apt:
+        name: opennebula-node-kvm
+        update_cache: yes
+
+    - name: Restart service libvirtd
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: libvirtd
+    
+    - name: Set oneadmin default password
+      user:
+        name: oneadmin
+        password: "{{ password | password_hash('sha512') }}"

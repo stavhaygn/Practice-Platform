@@ -1,0 +1,8 @@
+---
+- name: Distribute Authentication Configuration
+  hosts: kvm-nodes-oneadmin
+  tasks:
+    - name: Set authorized key taken from file
+      authorized_key:
+        user: oneadmin
+        key: "{{ lookup('file', '/var/lib/one/.ssh/id_rsa.pub') }}"

@@ -1,0 +1,13 @@
+aenum==3.1.11
+certifi==2022.6.15
+charset-normalizer==2.0.12
+dicttoxml==1.7.4
+idna==3.3
+lxml==4.9.1
+pkg-resources==0.0.0
+pyone==6.4.1
+requests==2.27.1
+six==1.16.0
+tblib==1.7.0
+urllib3==1.26.12
+xmltodict==0.13.0
